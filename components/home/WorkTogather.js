@@ -1,7 +1,8 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef} from 'react'
 import Image from 'next/image'
 import useLippStore from '@/store/LippStore'
+import { motion, AnimatePresence } from 'framer-motion';
 
 function WorkTogather() {
   return (
@@ -17,15 +18,15 @@ export default WorkTogather
 const ServicesWidget=()=>{
     const {language}=useLippStore();
     return(
-        <div className='w-screen h-screen flex'>
-            <div className='w-1/3 text-9xl text-[#432818] pt-[5.5rem] pl-4'>
+        <div className='w-screen h-screen flex bg-[#292828]'>
+            <div className='w-1/3 text-9xl text-[#9fdcff] pt-[5.5rem] pl-4'>
                 CMO as a Service
             </div>
-            <div className='flex w-2/3 h-[80%] bg-[#432818] rounded-l-2xl text-[#FFE6A7] gap-3 pt-[0.5rem] font-semibold mt-[5.5rem]'>
+            <div className='flex w-2/3 h-[80%] bg-[#73a7db] rounded-l-2xl text-[#292828] gap-3 pt-[0.5rem] font-semibold mt-[5.5rem]'>
                 <div className='min-w-[40%] h-full'>
                     <Image src={"/service.svg"} alt='image' width={1000} height={1000} className='w-full z-10 object-cover h-[80%]' />
                 </div>
-                <div className='p-10 text-3xl'>
+                <div className='p-10 text-3xl font-light'>
                     {language === "EN" ?  "Strategic marketing leadership – minus the overhead where you gain access to top-level marketing expertise tailored to your unique business goals. Without the commitment or cost of hiring in-house. Whether you're looking to scale, reposition, or refine your approach, providing hands-on support to drive real results":
                     "Strategische Marketingführung – ganz ohne Overhead. Sie erhalten Zugang zu hochwertiger Marketing-Expertise, massgeschneidert auf Ihre individuellen Geschäftsziele – ohne die Kosten und Verpflichtungen einer internen Festanstellung. Ob Sie skalieren, sich neu positionieren oder Ihre Strategie verfeinern möchten, unterstützen wir Sie mit praktischer und umsetzungsstarker Beratung für messbare Ergebnisse."
 }
@@ -36,43 +37,84 @@ const ServicesWidget=()=>{
 }
 
 const Services = () => {
-    const {language}=useLippStore();
-    const [data, setData] = useState(ServicesData); 
+    const { language } = useLippStore();
+    const [data, setData] = useState(ServicesData);
+    const [index, setIndex] = useState(0);
+    const intervalRef = useRef(null);
+    const isHovered = useRef(false);
+
     useEffect(() => {
         setData(language === "EN" ? ServicesData : ServicesData1);
     }, [language]);
 
+    useEffect(() => {
+        intervalRef.current = setInterval(() => {
+            if (!isHovered.current) {
+                setIndex((prevIndex) => (prevIndex + 1) % data.length);
+            }
+        }, 2000);
+        return () => clearInterval(intervalRef.current);
+    }, [data]);
+
     return (
-        <div className='w-screen h-[220vh] bg-[#432818] grid grid-cols-2 px-10 py-40'>
-            {data.map((items, index) => (
-                <ServiceTestimonial 
-                    key={index} 
-                    Name={items.name} 
-                    dis={items.dis} 
-                    yes={items.yes} 
-                />
-            ))}
-            <div className='w-[40%] p-3 bg-[#FFE6A7] text-[#432818] rounded-xl z-30 bottom-10 left-1/2 -translate-x-1/2 text-center absolute text-xl flex justify-evenly items-center'>
-                {language === "EN" ? "No matter whether you're in the ideation phase, launching a startup, running an established company, or scaling up, we are ready to support you every step of the way":
-                "Ganz egal, wo Sie sich gerade befinden. Ob in der Ideenphase, in einem Startup, in einem etablierten Unternehmen oder im Scale Up – wir begleiten und unterstützen Sie auf jedem Schritt und in jeder Phase"}
+        <div className='w-screen h-screen flex justify-center items-center bg-[#292828] relative'>
+            <div className='w-2/3 h-[80%] absolute flex left-0 bg-[#73a7db] top-1/2 -translate-y-1/2 rounded-r-2xl'>
+                <div 
+                    className='w-1/2 font-light text-3xl flex cursor-pointer justify-center p-10 _items-center' 
+                    onMouseEnter={() => (isHovered.current = true)} 
+                    onMouseLeave={() => (isHovered.current = false)}
+                >
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={data[index].dis}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            {data[index].dis}
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+                <div className='w-[60%] h-full relative'>
+                    <Image src={'/home/career.svg'} width={1000} alt='image' height={1000} className='absolute top-1/2 left-1/2 -translate-1/2 w-[45rem] h-[43rem] object-cover'/>
+                </div>
+            </div>
+            <div 
+                className='text-8xl p-5 _bg-[red] font-semibold text-[#9fdcff] absolute w-1/3 h-[80%] right-0 top-1/2 -translate-y-1/2'
+                onMouseEnter={() => (isHovered.current = true)}
+                onMouseLeave={() => (isHovered.current = false)}
+            >
+                <AnimatePresence mode="wait">
+                    <motion.div
+                    className=' w-2/3 cursor-pointer'
+                        key={data[index].name}
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        {data[index].name}
+                    </motion.div>
+                </AnimatePresence>
             </div>
         </div>
     );
 };
 
+// const ServiceTestimonial = ({ Name, yes, dis }) => {
+//     return (
+//         <div className='relative w-full h-60 bg-[#1E1E1E] rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-105 cursor-pointer group'>
+//             <div className='absolute inset-0 flex items-center justify-center text-5xl text-[#73a7db] font-bold transition-opacity duration-300 group-hover:opacity-0'>
+//                 {Name}
+//             </div>
+//             <div className='absolute inset-0 flex items-center justify-center px-5 text-center text-[#9fdcff] text-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[#1E1E1E] bg-opacity-90'>
+//                 {dis}
+//             </div>
+//         </div>
+//     );
+// };
 
-
-const ServiceTestimonial=({Name,yes,dis})=>{
-    return(
-        <div className='w-full h-full flex flex-col gap-5 relative'>
-            <div className={`text-[#99582A] text-3xl ${yes ? "pl-5":"pl-0"}`}>{Name}</div>
-            <div className='w-full h-[0.5px] bg-[#FFE6A7]'></div>
-            <div className={`w-full text-[#FFE6A7] text-5xl ${yes ? "pl-5":"pl-0"} `}>
-                {dis}
-            </div>
-        </div>
-    )
-}
 
 
 const ServicesData=[

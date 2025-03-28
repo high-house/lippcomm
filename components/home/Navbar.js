@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import useLippStore from "@/store/LippStore" 
+import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,16 +19,20 @@ export default function Navbar() {
   const languages = ["EN","DE"];
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-[#432818] text-[#FFE6A7] px-8 py-6 flex justify-between items-center z-50">
+    <nav className="fixed top-0 left-0 w-full bg-[#292828] text-[#9fdcff] px-8 py-6 flex justify-between items-center z-50">
       {/* Logo */}
-      <Link href="/">
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          className="text-3xl font-bold cursor-pointer"
-        >
-          LippComm
-        </motion.div>
+      <Link href="/" className="">
+       
+      </Link>
+      
+      <Link href="/" className="absolute top-[-4.5rem] left-3">
+      <Image
+            className="w-[25rem] h-[15rem] cursor-pointer"
+            width={400}
+            height={400}
+            src={"/logo.png"}
+        
+        />
       </Link>
 
       {/* Desktop Menu */}

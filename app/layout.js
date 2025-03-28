@@ -1,10 +1,10 @@
-import { Playfair_Display } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair-display",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["400","500", "600", "700"], 
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -16,8 +16,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${playfairDisplay.variable} antialiased`}
-        style={{ fontFamily: "var(--font-playfair-display), serif" }}
+        className={`${poppins.variable} antialiased`}
+        style={{ fontFamily: "var(--font-poppins), sans-serif" }}
         cz-shortcut-listen="true"
       >
         {children}
