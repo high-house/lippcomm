@@ -91,7 +91,7 @@ const CounterSection = () => {
             ref={sectionRef} 
             className="w-screen h-screen flex flex-col items-center justify-center _text-[#432818] px-10"
         >
-            <h2 className="text-5xl font-semibold text-[#73A7DB] mb-10">
+            <h2 className="text-5xl font-semibold text-white _text-[#73A7DB] mb-10">
                 {language === "EN" ? "Why work with us?" : "Warum mit uns arbeiten?"}
             </h2>
             

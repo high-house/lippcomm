@@ -19,11 +19,11 @@ const ServicesWidget=()=>{
     const {language}=useLippStore();
     return(
         <div className='w-screen h-screen flex bg-[#292828]'>
-            <div className='w-1/3 text-9xl text-[#9fdcff] pt-[5.5rem] pl-4'>
+            <div className='w-1/3 text-9xl text-white _text-[#9fdcff] pt-[5.5rem] pl-4'>
                 CMO as a Service
             </div>
             <div className='flex w-2/3 h-[80%] bg-[#73a7db] rounded-l-2xl text-[#292828] gap-3 pt-[0.5rem] font-semibold mt-[5.5rem]'>
-                <div className='min-w-[40%] h-full'>
+                <div className='min-w-[40%] h-full p-10'>
                     <Image src={"/service.svg"} alt='image' width={1000} height={1000} className='w-full z-10 object-cover h-[80%]' />
                 </div>
                 <div className='p-10 text-3xl font-light'>
@@ -66,6 +66,7 @@ const Services = () => {
                 >
                     <AnimatePresence mode="wait">
                         <motion.div
+                            className='text-[#292828]'
                             key={data[index].dis}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -81,7 +82,7 @@ const Services = () => {
                 </div>
             </div>
             <div 
-                className='text-8xl p-5 _bg-[red] font-semibold text-[#9fdcff] absolute w-1/3 h-[80%] right-0 top-1/2 -translate-y-1/2'
+                className='text-8xl p-5 _bg-[red] font-semibold text-white _text-[#9fdcff] absolute w-1/3 h-[80%] right-0 top-1/2 -translate-y-1/2'
                 onMouseEnter={() => (isHovered.current = true)}
                 onMouseLeave={() => (isHovered.current = false)}
             >

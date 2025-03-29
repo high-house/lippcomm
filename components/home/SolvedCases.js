@@ -93,18 +93,23 @@ export const TeamMap = () => {
   
 
 const TeamCard = ({ x, y, src1, user, company, left }) => {
-    const [visible, setVisible] = useState(false);
-    const [isOpen, setIsOpen] = useState(false); // Modal visibility state
+    const [isOpen, setIsOpen] = useState(false);
 
+    const [visible, setVisible] = useState(false);
     const handleScroll = () => {
-        const scroll = window.scrollY + window.innerHeight * 0.7;
-        setVisible(scroll >= y);
-    };
+        const scroll = window.scrollY - (4*window.innerHeight * 0.1);
+        if (scroll >= 2850) {
+            setVisible(true);
+
+        } else {
+            setVisible(false);
+        }
+    }
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [y]);
+    })
 
     return (
         <>
@@ -125,7 +130,7 @@ const TeamCard = ({ x, y, src1, user, company, left }) => {
                             className="z-50 rounded-2xl w-[30rem] h-60 object-cover"
                         />
                         <div className="flex items-center bg-black/40  w-[50rem] h-auto rounded-xl gap-4 shadow-lg p-4">
-                            <div className="relative flex flex-col items-center w-1/3">
+                            <div className="relative flex flex-col items-center w-1/3 text-white _text-[#4FB5C9]">
                                 <div className="text-xl font-bold">{user}</div>
                                 <div className="text-lg font-normal">{company}</div>
                             </div>
@@ -144,7 +149,7 @@ const TeamCard = ({ x, y, src1, user, company, left }) => {
                         onClick={() => setIsOpen(true)} // Open modal on click
                     >
                         <div className="flex items-center bg-black/40 w-[50rem] h-auto rounded-xl gap-4 shadow-lg p-4">
-                            <div className="relative flex flex-col items-center w-1/3">
+                            <div className="relative flex flex-col items-center w-1/3 text-white _text-[#4FB5C9]">
                                 <div className="text-xl font-bold">{user}</div>
                                 <div className="text-lg font-normal">{company}</div>
                             </div>
@@ -182,7 +187,7 @@ const TeamCard = ({ x, y, src1, user, company, left }) => {
                         </p>
                     </div>
                     <motion.div
-                        className=" w-[60%] h-full"
+                        className=" w-[60%] h-full p-1"
                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
                     >
                         <button
