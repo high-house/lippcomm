@@ -27,7 +27,7 @@ export default function Navbar() {
       
       <Link href="/" className="absolute top-[-4.5rem] left-3">
       <Image
-            className="w-[25rem] h-[15rem] cursor-pointer"
+            className="w-[23rem] h-[13rem] cursor-pointer"
             width={400}
             height={400}
             src={"/logo.png"}
