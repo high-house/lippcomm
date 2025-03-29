@@ -37,12 +37,12 @@ const TextBlock = () => {
     return (
         <div className='w-screen h-screen flex items-end'>
 
-            <div className='flex gap-4  text-[#9fdcff] text-7xl font-semibold _bg-[red] absolute top-[40%] left-32'>
-                <span className='min-w-[13rem] '>
+            <div className='flex gap-4  text-[#9fdcff] text-7xl font-semibold _bg-[red] absolute top-[40%] left-[20%]'>
+                <span className='min-w-[13rem] text-white _text-[#9fdcff]'>
                     {language === "EN" ? "I need" : "Ich brauche"}
                 </span>
                 <motion.span
-                    className='max-w-[30rem]  h-[20rem] _bg-[red] text-white text-[#9fdcff]'
+                    className='max-w-[30rem]  h-[20rem] _bg-[red] _text-white text-[#9fdcff]'
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
