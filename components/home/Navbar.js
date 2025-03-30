@@ -30,6 +30,7 @@ export default function Navbar() {
             className="w-[20rem] h-[12rem] cursor-pointer"
             width={400}
             height={400}
+            alt="navbar"
             src={"/logo.png"}
         
         />

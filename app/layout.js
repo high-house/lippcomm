@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} antialiased`}
+        className={`${poppins.variable} antialiased bg-[#292828] text-[#9fdcff]`}
         style={{ fontFamily: "var(--font-poppins), sans-serif" }}
         cz-shortcut-listen="true"
       >
