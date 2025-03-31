@@ -1,23 +1,46 @@
-import React from 'react';
+import Blog from '@/components/blog/Blog';
+import { createClient } from 'next-sanity';
 
-const blog = {
-  title: "Understanding React Hooks",
-  description: "A deep dive into React Hooks and how they improve state management in functional components.",
-  slug: "understanding-react-hooks",
-  date: "March 29, 2025",
-  author: "John Doe",
-  content: "<p>React Hooks allow you to use state and other React features without writing a class.</p><p>They simplify component logic and improve code readability.</p>"
-};
 
-function Page({ params }) {
-  return (
-    <div className="container mx-auto px-4 py-10">
-      <h1 className="text-6xl font-bold text-white mb-4">{blog.title}</h1>
-      <p className="text-[#9fdcff] mb-2 text-3xl">By {blog.author} • {blog.date}</p>
-      <p className="text-[#9fdcff] mb-4">{blog.description}</p>
-      <div className="prose max-w-full" dangerouslySetInnerHTML={{ __html: blog.content }}></div>
-    </div>
-  );
+const client = createClient({
+    projectId: 'ep1az9c9',
+    dataset: 'production',
+    apiVersion: '2021-08-31',
+    useCdn: true,
+});
+
+async function getBlog(slug) {
+    return await client.fetch(
+        `*[_type == "post" && slug.current == $slug][0]{
+            title, 
+            _createdAt, 
+            "mainImage": mainImage.asset->url, // Fetch direct image URL
+            "authorName": author->name,
+            "category": category->title,
+            body
+        }`,
+        { slug }
+    );
 }
 
-export default Page;
+export default async function BlogPost({ params }) {
+    const { slug } = await params;
+    const blog = await getBlog(slug);
+
+    if (!blog) {
+        return (
+            <div className="text-center py-10">
+                <h1 className="text-2xl font-bold">Blog not found</h1>
+                <Link href="/blog" className="text-blue-600 mt-4 inline-block">
+                    Go back to Blogs
+                </Link>
+            </div>
+        );
+    }
+
+    return (
+        <div className="w-screen lg:h-screen h-[135vh]  flex justify-center items-center p-4 lg:p-0">
+            <Blog blog={blog}/>
+        </div>
+    );
+}

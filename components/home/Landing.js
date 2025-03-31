@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react'
 import { motion } from "framer-motion";
 import useLanguageStore from '@/store/LippStore';
 import Link from 'next/link';
+import { TransitionLink } from '../Transition/TransitionLink';
 
 export default function Landing() {
     return (
-        <div className='w-screen h-screen'>
+        <div className='w-screen h-screen relative'>
             <TextBlock />
         </div>
     )
@@ -35,10 +36,10 @@ const TextBlock = () => {
     }, []);
 
     return (
-        <div className='w-screen h-screen flex items-end'>
+        <div className='w-screen h-screen flex items-end sm:justify-center md:p-5'>
 
-            <div className='flex gap-4  text-[#9fdcff] text-7xl font-semibold _bg-[red] absolute top-[40%] left-[20%]'>
-                <span className='min-w-[13rem] text-white _text-[#9fdcff]'>
+            <div className='flex lg:flex-row flex-col gap-4  text-[#9fdcff] text-4xl lg:text-7xl font-semibold _bg-[red] absolute top-[40%] left-[20%]'>
+                <span className='lg:min-w-[13rem] w-auto text-white _text-[#9fdcff]'>
                     {language === "EN" ? "I need" : "Ich brauche"}
                 </span>
                 <motion.span
@@ -53,9 +54,9 @@ const TextBlock = () => {
                 </motion.span>
 
             </div>
-            <div className='w-[40%] p-3 bg-[#9fdcff] text-[#292828] rounded-xl z-30 bottom-10 left-32 absolute text-xl flex justify-evenly items-center'>
+            <div className='lg:w-[40%] w-[90%] lg:p-3 p-2 bg-[#9fdcff] text-[#292828] rounded-xl z-30 bottom-10 lg:left-32 left-5 absolute lg:text-xl text-xs flex justify-evenly items-center'>
                 <span>{language === "EN" ? "Let’s work together and make your digital presence count! →":"goes to Services with the Title “Hiring a CMO can be expensive →"}</span>
-                <Link href={"/services"} className='px-4 cursor-pointer py-3 bg-white text-[#292828] rounded-xl'>{language === "EN" ? "learn more":" mehr erfahren"}</Link> 
+                <TransitionLink href={"/services"} className='px-4 lg:w-auto w-[10rem] cursor-pointer lg:py-3 py-2 bg-white text-[#292828] rounded-xl'>{language === "EN" ? "learn more":" mehr erfahren"}</TransitionLink> 
             </div>
         </div>
     );

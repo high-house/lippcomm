@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import useLippStore from "@/store/LippStore" 
 import Image from "next/image";
+import { TransitionLink } from "../Transition/TransitionLink";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,33 +21,33 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full bg-[#292828] text-[#9fdcff] px-8 py-6 flex justify-between items-center z-50">
       {/* Logo */}
-      <Link href="/" className="">
+      <TransitionLink href="/" className="">
        
-      </Link>
+      </TransitionLink>
       
-      <Link href="/" className="absolute top-[-3.5rem] left-3">
+      <TransitionLink href="/" className="absolute lg:top-[-3.5rem] lg:left-3 left-2 top-[-1rem]">
       <Image
-            className="w-[20rem] h-[12rem] cursor-pointer"
+            className="lg:w-[20rem] w-[10rem] lg:h-[12rem] h-[7rem] cursor-pointer"
             width={400}
             height={400}
             alt="navbar"
             src={"/logo.png"}
         
         />
-      </Link>
+      </TransitionLink>
 
       {/* Desktop Menu */}
       <div className="hidden md:flex space-x-8 text-lg">
         {["Services", "Business Cases", "Blog", "Contact"].map((route) => (
-          <Link key={route} href={`/${route.toLowerCase().replace(" ", "-")}`}>
+          <TransitionLink key={route} href={`/${route.toLowerCase().replace(" ", "-")}`}>
             <motion.span
               whileHover={{ scale: 1.1, color: "#D79922" }}
               whileTap={{ scale: 0.9 }}
-              className="cursor-pointer text-xl hover:text-[#D79922] transition-colors"
+              className="cursor-pointer text-xl hover:text-[#9fdcff] transition-colors"
             >
               {route}
             </motion.span>
-          </Link>
+          </TransitionLink>
         ))}
       </div>
 
@@ -55,7 +55,7 @@ export default function Navbar() {
       <div className="relative hidden md:block">
         <button
           onClick={() => setLangDropdown(!langDropdown)}
-          className="flex items-center gap-2 px-4 py-2 bg-[#FFE6A7] text-[#432818] rounded-md"
+          className="flex items-center gap-2 px-4 py-2 bg-[#9fdcff] text-[#292828] rounded-md"
         >
           {selectedLang} ▼
         </button>
@@ -64,7 +64,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-12 right-0 w-24 bg-[#FFE6A7] text-[#432818] rounded-md shadow-lg"
+            className="absolute top-12 right-0 w-24 bg-[#9fdcff] text-[#292828] rounded-md shadow-lg"
           >
             {languages.map((lang) => (
               <button
@@ -73,7 +73,7 @@ export default function Navbar() {
                   setSelectedLang(lang);
                   setLangDropdown(false);
                 }}
-                className="block px-4 py-2 w-full text-left hover:bg-[#99582A]"
+                className="block px-4 py-2 w-full text-left hover:bg-white"
               >
                 {lang}
               </button>
@@ -85,7 +85,7 @@ export default function Navbar() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden focus:outline-none text-[#FFE6A7] text-3xl"
+        className="md:hidden focus:outline-none text-[#9fdcff] text-3xl"
       >
         ☰
       </button>
@@ -96,24 +96,24 @@ export default function Navbar() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="absolute top-16 left-0 w-full bg-[#432818] text-center py-4 flex flex-col space-y-4 md:hidden"
+          className="absolute top-16 left-0 w-full text-[#292828] bg-[#9fdcff] text-center py-4 flex flex-col space-y-4 md:hidden"
         >
           {["Services", "Business Cases", "Blog", "Contact"].map((route) => (
-            <Link key={route} href={`/${route.toLowerCase().replace(" ", "-")}`}>
+            <TransitionLink key={route} href={`/${route.toLowerCase().replace(" ", "-")}`}>
               <span
                 onClick={() => setIsOpen(false)}
-                className="block py-2 cursor-pointer hover:text-[#D79922] transition-colors"
+                className="block py-2 cursor-pointer hover:text-[#9fdcff] transition-colors"
               >
                 {route}
               </span>
-            </Link>
+            </TransitionLink>
           ))}
 
           {/* Mobile Language Selector */}
           <div className="relative">
             <button
               onClick={() => setLangDropdown(!langDropdown)}
-              className="mt-4 px-4 py-2 bg-[#D79922] text-[#432818] rounded-md w-full"
+              className="mt-4 px-4 py-2 bg-[#292828] text-[#9fdcff] rounded-md w-full"
             >
               {selectedLang} ▼
             </button>
@@ -122,7 +122,7 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute top-12 left-1/2 transform -translate-x-1/2 w-24 bg-[#D79922] text-[#432818] rounded-md shadow-lg"
+                className="absolute top-12 left-1/2 transform -translate-x-1/2 w-24 bg-[#9fdcff] text-[#292828] rounded-md shadow-lg"
               >
                 {languages.map((lang) => (
                   <button

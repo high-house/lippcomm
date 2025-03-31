@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import Link from "next/link";
+import { TransitionLink } from "../Transition/TransitionLink";
 // import { Dancing_Script } from 'next/font/google';
 // import { LampDemo } from './LampDemo';
 // const scriptFont = Dancing_Script({ subsets: ['latin'], weight: ['400', '700'] });
@@ -57,15 +58,16 @@ export const LampContainer = ({
                 className
             )}
         >
-            <div className=" absolute bottom-0 w-screen flex h-[10rem] text-[#9fdcff] justify-center items-center">
-                <div className="text-xl w-1/2 p-20">
-                    2025 © by Lippcomm, all rights reserved
-                </div>
-                <div className="w-1/2 flex gap-10 justify-end p-20">
-                    <Link href={'/imprint'} className=" cursor-pointer">Imprint</Link>
-                    <div className=" cursor-pointer">Data protection declaration</div>
-                </div>
-            </div>
+           <div className="absolute bottom-0 w-screen flex flex-col md:flex-row h-auto md:h-[10rem] text-[#9fdcff] justify-center items-center p-5 md:p-20">
+    <div className="text-center md:text-left text-xl w-full md:w-1/2">
+        2025 © by Lippcomm, all rights reserved
+    </div>
+    <div className="w-full md:w-1/2 flex lg:text-lg lg:font-semibold text-sm gap-5 md:gap-10 justify-between md:justify-end mt-3 md:mt-0">
+        <TransitionLink href={'/imprint'} className="cursor-pointer">Imprint</TransitionLink>
+        <div className="cursor-pointer">Data protection declaration</div>
+    </div>
+</div>
+
             {/* <h2 className={`mt-10 text-5xl text-[#CBC6C6] text-center z-10 absolute top-10 left-1/2 -translate-x-1/2 ${scriptFont.className}`}>Contact Us</h2> */}
             <div className="relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0 ">
                 <motion.div

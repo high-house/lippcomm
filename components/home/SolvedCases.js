@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { use } from 'react'
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
@@ -23,8 +23,18 @@ export default SolvedCases
 
 
 
-
 export const TeamMap = () => {
+    const [isMobile, setMobile] = useState(false);
+  
+    useEffect(() => {
+      const handleResize = () => {
+        setMobile(window.innerWidth <= 700);
+      };
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+  
     const teamMembers = [
       {
         src1: "/home/img1.jpg",
@@ -65,38 +75,116 @@ export const TeamMap = () => {
     ];
   
     return (
-      <div id="team" className="font-geist relative isolate h-[150vh] w-full _p-10">
-        {teamMembers.map((member, index) => (
-          <TeamCard
-            key={index}
-            src1={member.src1}
-            src2={member.src2}
-            x={member.x}
-            y={member.y}
-            left={member.left}
-            company={member.company}
-            user={member.user}
+      <div id="team" className="font-geist relative isolate lg:h-[150vh] h-[200vh] w-full _p-10 lg:px-0 px-5">
+        {!isMobile ? (
+          teamMembers.map((member, index) => (
+            <TeamCard
+              key={index}
+              src1={member.src1}
+              src2={member.src2}
+              x={member.x}
+              y={member.y}
+              left={member.left}
+              company={member.company}
+              user={member.user}
+            />
+          ))
+        ) : (
+          teamMembers.map((member, index) => (
+            <MobileTeamCard
+              key={index}
+              src1={member.src1}
+              company={member.company}
+              user={member.user}
+            />
+          ))
+        )}
+  
+        {!isMobile && (
+          <SquigglyLine
+            path="M5.24077 1C67.8037 220.73 894.305 -49.5177 958.489 123.952C1047.68 377.012 13.7969 160.061 5.24077 403.838C-3.31537 647.615 958.489 301.275 958.489 541"
+            viewBox="0 0 1100 814"
           />
-        ))}
-  
-        <SquigglyLine
-          path="M5.24077 1C67.8037 220.73 894.305 -49.5177 958.489 123.952C1047.68 377.012 13.7969 160.061 5.24077 403.838C-3.31537 647.615 958.489 301.275 958.489 541"
-          viewBox="0 0 1100 814"
-        />
-  
-        {/* <div className="absolute bottom-10 left-1/2 text-xl -translate-x-1/2 w-[9rem] rounded-xl flex justify-center items-center cursor-pointer py-3 bg-[#FFE6A7]">
-          Read More
-        </div> */}
+        )}
       </div>
     );
   };
   
+  const MobileTeamCard = ({ src1, user, company }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <>
+            {/* Mobile Card */}
+            <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="w-full max-w-md mx-auto bg-black/40 rounded-xl overflow-hidden shadow-lg p-4 mt-4 cursor-pointer"
+                onClick={() => setIsOpen(true)} // Open modal on click
+            >
+                <Image
+                    src={src1}
+                    width={400}
+                    height={250}
+                    alt="team member"
+                    className="w-full h-52 object-cover rounded-lg"
+                />
+                <div className="text-white text-center mt-4">
+                    <h2 className="text-xl font-bold">{user}</h2>
+                    <p className="text-lg">{company}</p>
+                </div>
+            </motion.div>
+
+            {/* Popup Modal for Mobile */}
+            {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-[99] p-4"
+                >
+                    <div className="bg-white rounded-2xl overflow-hidden shadow-lg flex flex-col w-full max-w-md">
+                        {/* Close Button */}
+                        <button
+                            className="absolute top-32 right-7 bg-[#9fdcff] text-white w-8 h-8 rounded-full flex justify-center items-center"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            ✕
+                        </button>
+
+                        {/* Image on top */}
+                        <Image
+                            src={src1}
+                            width={400}
+                            height={400}
+                            alt="profile-image"
+                            className="w-full h-64 object-cover"
+                        />
+
+                        {/* Details */}
+                        <div className="p-5 text-center">
+                            <h2 className="text-2xl font-bold text-gray-800">{user}</h2>
+                            <p className="text-lg text-gray-600">{company}</p>
+                            <p className="text-sm text-gray-500 mt-2">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget elit vel dolor tincidunt laoreet.
+                            </p>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+        </>
+    );
+};
+
 
 const TeamCard = ({ x, y, src1, user, company, left }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const [visible, setVisible] = useState(false);
     const handleScroll = () => {
+
         const scroll = window.scrollY - (4*window.innerHeight * 0.1);
         if (scroll >= 2850) {
             setVisible(true);
@@ -191,7 +279,7 @@ const TeamCard = ({ x, y, src1, user, company, left }) => {
                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
                     >
                         <button
-                            className="absolute top-2 right-2 bg-[#292828] cursor-pointer text-white w-10 h-10 rounded-full text-base flex justify-center items-center"
+                            className="absolute top-2 right-2 bg-[#9fdcff] cursor-pointer text-white w-10 h-10 rounded-full text-base flex justify-center items-center"
                             onClick={() => setIsOpen(false)}
                         >
                             ✕

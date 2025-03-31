@@ -1,43 +1,66 @@
-import React from 'react';
+"use client";  // Add this line
 
-const FeatureCard = ({ icon, title, description }) => {
+import React from 'react';
+import useLippStore from '@/store/LippStore'; // Import the language store
+
+const FeatureCard = ({ imageSrc, title, description }) => {
   return (
-    <div className="bg-[#BB9457] p-6 rounded-lg shadow-md flex items-start space-x-4">
-      <div className="text-[#432818] text-2xl">{icon}</div>
+    <div className="bg-white p-6 rounded-lg shadow-md flex items-start space-x-4">
+      <img src={imageSrc} alt={title} className="w-12 h-12 object-contain" />
       <div>
-        <h3 className="font-bold text-lg text-[#432818]">{title}</h3>
-        <p className="text-[#432818] mt-2 text-sm">{description}</p>
+        <h3 className="font-bold text-lg text-[#1F222F]">{title}</h3>
+        <p className="text-[#1F222F] mt-2 text-sm">{description}</p>
       </div>
     </div>
   );
 };
 
-const CMOservies = () => {
+const CMOservices = () => {
+  const { language } = useLippStore();
+  const isEnglish = language === "EN";
+
   return (
-    <div className="bg-[#432818] flex py-10 px-[12%]">
-      <div className="bg-[#FFE6A7] p-8 rounded-lg shadow-lg w-5xl" style={{ fontFamily: 'Playfair Display, serif' }}>
-        <p className="text-[#432818] text-sm font-semibold">Step 2</p>
-        <h1 className="text-[#432818] text-3xl font-bold">Strategic guiding at its core</h1>
-        <p className="text-[#432818] font-bold mt-4">What's included:</p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-          <FeatureCard icon="💼" title="CMO strategy development" description="Expert marketing leadership tailored to your business stage, delivering 1-2 focused initiatives each month." />
-          <FeatureCard icon="📅" title="Weekly strategy sessions" description="30-minute calls to optimize and adjust your marketing efforts." />
-          <FeatureCard icon="🎧" title="Active support" description="Fast, responsive communication via a dedicated Slack channel." />
-          <FeatureCard icon="📊" title="Zealy hub insights" description="Always check our marketing initiatives in the Zealy hub with real-time updates." />
-        </div>
-        
-        <p className="text-[#432818] text-sm mt-6">
-          If you have an internal team, your CMO will guide them to ensure everything stays aligned with the strategic vision.
+    <div className="bg-[#292828] flex py-10 lg:px-[12%] px-5">
+      <div className="bg-[#9FDCFF] lg:p-8 p-2 rounded-lg shadow-lg w-5xl">
+        <p className="text-[#23222C] text-sm font-semibold">{isEnglish ? "Step 2" : "Schritt 2"}</p>
+        <h1 className="text-[#23222C] text-3xl font-bold">
+          {isEnglish ? "Strategic guiding at its core" : "Strategische Führung im Kern"}
+        </h1>
+        <p className="text-[#23222C] font-bold mt-4">
+          {isEnglish ? "What's included:" : "Was ist enthalten:"}
         </p>
         
-        <div className="mt-6 flex justify-between items-center">
-          <p className="font-bold text-[#432818]">CMO as a service</p>
-          <p className="font-bold text-lg text-[#432818]">CHF 1500 /month</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+          <FeatureCard 
+            imageSrc="/service/CMO.svg" 
+            title={isEnglish ? "CMO Strategy Development" : "CMO-Strategieentwicklung"} 
+            description=""
+          />
+          <FeatureCard 
+            imageSrc="/service/weekly.svg" 
+            title={isEnglish ? "Weekly Strategy Meetup" : "Wöchentliches Strategie-Meeting"} 
+            description=""
+          />
+          <FeatureCard 
+            imageSrc="/service/weekly.svg" 
+            title={isEnglish ? "Monthly Personal Meetup" : "Monatliches persönliches Treffen"} 
+            description=""
+          />
+          <FeatureCard 
+            imageSrc="/service/Active.svg" 
+            title={isEnglish ? "Active Support" : "Aktive Unterstützung"} 
+            description=""
+          />
         </div>
+        
+        <p className="text-[#1F222F] text-base mt-6">
+          {isEnglish 
+            ? "The CMO defines the strategic direction and supervises your marketing activities or acts as a project manager. However, daily execution of the activities is not included unless specifically booked as part of our services (see phase 3)." 
+            : "Der CMO legt die strategische Richtung fest und überwacht deine Marketingaktivitäten oder fungiert als Projektmanager. Die tägliche Durchführung der Aktivitäten ist jedoch nicht enthalten, es sei denn, sie wurde als Teil unserer Dienstleistungen speziell gebucht (siehe Phase 3)."}
+        </p>
       </div>
     </div>
   );
 };
 
-export default CMOservies;
+export default CMOservices;

@@ -58,9 +58,6 @@ const stats1 = [
 ];
 
 const CounterSection = () => {
-    const [counts, setCounts] = useState(stats.map(() => 0));
-    const sectionRef = useRef(null);
-    const [startCount, setStartCount] = useState(false);
     const [data, setData] = useState(stats); 
     const { language } = useLippStore();
 
@@ -68,40 +65,19 @@ const CounterSection = () => {
         setData(language === "EN" ? stats : stats1);
     }, [language]);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setStartCount(true);
-                    observer.disconnect(); // Stop observing once triggered
-                }
-            },
-            { threshold: 0.5 }
-        );
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
-
-        return () => observer.disconnect();
-    }, []);
-
     return (
-        <div 
-            ref={sectionRef} 
-            className="w-screen h-screen flex flex-col items-center justify-center _text-[#432818] px-10"
-        >
-            <h2 className="text-5xl font-semibold text-white _text-[#73A7DB] mb-10">
+        <div className="w-full py-16 px-6 flex flex-col items-center justify-center">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white text-center mb-10">
                 {language === "EN" ? "Why work with us?" : "Warum mit uns arbeiten?"}
             </h2>
             
-            <div className="w-full max-w-5xl space-y-8">
+            <div className="w-full max-w-5xl space-y-12">
                 {data.map((stat, index) => (
-                    <div key={index} className="flex items-center gap-32 justify-center">
-                        <Image src={stat.src} width={400} height={400} className="w-24 h-24 object-cover" alt={stat.label} />
+                    <div key={index} className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 text-center md:text-left">
+                        <Image src={stat.src} width={100} height={100} className="w-20 h-20 md:w-24 md:h-24 object-cover" alt={stat.label} />
                         <div className="flex-1">
-                            <h3 className="text-3xl font-semibold">{stat.label}</h3>
-                            <p className="text-[#73A7DB] text-xl mt-2">{stat.description}</p>
+                            <h3 className="text-2xl md:text-3xl font-semibold">{stat.label}</h3>
+                            <p className="text-[#73A7DB] text-lg md:text-xl mt-2">{stat.description}</p>
                         </div>
                     </div>
                 ))}

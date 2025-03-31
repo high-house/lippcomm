@@ -15,20 +15,19 @@ import { LampDemo } from "@/components/ui/lamp";
 function Page() {
   return (
     <div className="w-auto h-auto overflow-hidden flex flex-col bg-[#292828] text-[#9fdcff]">
-        <div className="w-[99%] h-screen absolute top-0 left-0">
+        {/* <div className="w-[99%] h-screen absolute top-0 left-0">
                 <Image src={"/bg.png"} width={2000} alt="home" height={2000} className="w-full h-screen object-cover"/>
-        </div>
-      <Navbar />
-      <Landing />
-      <WorkTogather />
-      <CounterSection />
-      <SolvedCases />
-      <Vision/>
-      <About/>
-      <InfiniteMovingCardsDemo/>
-      <ContactUs/>
-      <LampDemo/>
-      {/* <TeamMap /> */}
+                </div> */}
+        <Landing/>
+        <WorkTogather />
+        <CounterSection />
+        <SolvedCases /> 
+        <Vision/>
+        <About/>
+        <InfiniteMovingCardsDemo/>
+        <ContactUs/>
+        <LampDemo/>
+        {/* <TeamMap /> */}
       
     </div>
   );

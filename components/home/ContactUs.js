@@ -3,10 +3,26 @@ import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
 import useLippStore from '@/store/LippStore';
+import { TransitionLink } from '../Transition/TransitionLink';
 
 export default function ContactUs() {
-    const { language } = useLippStore();
+    return (
+        <>
+            {/* Big Screen Layout */}
+            <div className="hidden md:flex">
+                <BigScreenContact />
+            </div>
 
+            {/* Mobile Layout */}
+            <div className="md:hidden">
+                <MobileContact />
+            </div>
+        </>
+    );
+}
+
+function BigScreenContact() {
+    const { language } = useLippStore();
     const isEnglish = language === "EN";
 
     return (
@@ -41,6 +57,47 @@ export default function ContactUs() {
                     height={600} 
                     className="object-cover"
                 />
+            </div>
+        </div>
+    );
+}
+
+function MobileContact() {
+    const { language } = useLippStore();
+    const isEnglish = language === "EN";
+
+    return (
+        <div className="flex flex-col w-screen h-auto p-6 gap-6 items-center text-center">
+            {/* Image Section */}
+            <div className="w-full flex justify-center">
+                <Image 
+                    src={"/home/footer.svg"} 
+                    alt={isEnglish ? "Contact" : "Kontakt"} 
+                    width={300} 
+                    height={300} 
+                    className="object-cover"
+                />
+            </div>
+
+            {/* Text Section */}
+            <div className="flex flex-col gap-3">
+                <div className="font-light text-3xl">
+                    {isEnglish ? "Curious?" : "Neugierig?"}
+                </div>
+                <div className='text-4xl text-white font-bold'>
+                    Lets Contact Find the Way 
+                </div>
+                <div className="font-light text-base">
+                    {isEnglish 
+                        ? "Let’s find out how we can elevate your marketing together. Reach out now or book a free meeting with us." 
+                        : "Lass uns herausfinden, wie wir dein Marketing gemeinsam verbessern können. Kontaktiere uns jetzt oder buche ein kostenloses Gespräch mit uns."}
+                </div>
+                <TransitionLink
+                    href={"/contact"} 
+                    className="cursor-pointer bg-white w-[8rem] rounded-2xl flex justify-center items-center h-[2.5rem] text-[#292828] text-lg mx-auto"
+                >
+                    {isEnglish ? "Contact Us" : "Kontaktiere uns"}
+                </TransitionLink>
             </div>
         </div>
     );
